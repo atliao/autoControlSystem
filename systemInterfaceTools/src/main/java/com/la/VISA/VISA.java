@@ -9,7 +9,7 @@ import com.sun.jna.ptr.LongByReference;
  * @author LA
  * @createDate 2023-02-22-11:13
  */
-public interface VISA  extends Library {
+public interface VISA extends Library {
 
     VISA INSTANCE = (VISA) Native.loadLibrary("visa32", VISA.class);
 

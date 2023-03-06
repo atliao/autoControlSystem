@@ -13,6 +13,7 @@ public class SignalUsbControllerTest {
     public void testOutPOn(){
         //signalController.initController(0x2717,0x5010);
         signalUsbController.OutputOn(1);
+        //signalUsbController.closeController();
     }
 
 
@@ -20,10 +21,12 @@ public class SignalUsbControllerTest {
     public void testOutPOff(){
         //signalController.initController(0x2717,0x5010);
         signalUsbController.OutputOff(1);
+        //signalUsbController.closeController();
     }
 
     @Test
     public void process(){
+        //signalController.initController(0x2717,0x5010);
         signalUsbController.setChannelMode(1);
         System.out.println();
         signalUsbController.setSignalPolarity(1);
@@ -40,5 +43,6 @@ public class SignalUsbControllerTest {
         System.out.println();
         signalUsbController.OutputOff(1);
         System.out.println();
+        //signalUsbController.closeController();
     }
 }

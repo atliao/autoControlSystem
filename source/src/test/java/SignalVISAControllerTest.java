@@ -7,30 +7,33 @@ import org.junit.Test;
  */
 public class SignalVISAControllerTest {
 
-    SignalVISAController signalVISAController = new SignalVISAController();
+    SignalVISAController signalVISAController;
 
     @Test
     public void testReadId(){
-        signalVISAController.initController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("ASRL2::INSTR");
         String id = signalVISAController.readID();
         System.out.println("device id: " + id);
+        signalVISAController.closeController();
     }
 
     @Test
     public void testSetFrequency(){
-        signalVISAController.initController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("ASRL2::INSTR");
         signalVISAController.setSignalFrequency(1,2.6);
+        signalVISAController.closeController();
     }
 
     @Test
     public void testOutputOn(){
-        signalVISAController.initController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("ASRL2::INSTR");
         signalVISAController.OutputOn(1);
+        signalVISAController.closeController();
     }
 
     @Test
     public void testVISAController() throws Exception{
-        signalVISAController.initController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("ASRL2::INSTR");
         String id = signalVISAController.readID();
         System.out.println("device id:" + id);
         signalVISAController.initSignalChannel(1);
@@ -43,6 +46,5 @@ public class SignalVISAControllerTest {
         signalVISAController.OutputOff(1);
         Thread.sleep(20);
         signalVISAController.closeController();
-
     }
 }

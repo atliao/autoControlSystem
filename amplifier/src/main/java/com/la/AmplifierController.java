@@ -9,12 +9,28 @@ import gnu.io.SerialPort;
  */
 public class AmplifierController {
 
-    PortController portController;
-    SerialPort serialPort;
+    public PortController portController;
+    public SerialPort serialPort;
 
     public AmplifierController(String com){
         portController = new PortController();
         serialPort = portController.openPort(com);
+    }
+
+    public void initAmplifier(){
+
+        int localMode = 1; // 远程模式
+        int reference = 2;//2:外部参考,0:内部参考,1:内部扫描
+        double phas = 0;//相位改变
+        double sineV = 2;//输出正弦振幅
+        int sourceInMode = 0;//输入信号模式 A
+
+        //setLocalFounction(localMode);
+        setReference(reference);
+        setReferencePash(phas);
+        //setSineAmplitude(sineV);
+        setSourceIn(sourceInMode);
+        //setOutSignal(1,0);
     }
 
     //查询ID
@@ -33,7 +49,7 @@ public class AmplifierController {
     }
 
     //查询参考源
-    public String QueryRefrence() throws Exception{
+    public String QueryReference() throws Exception{
         portController.sendmessage(serialPort,LCommand.OUTX);
         Thread.sleep(100);
         portController.sendmessage(serialPort, LCommand.QFMOD);
@@ -43,21 +59,21 @@ public class AmplifierController {
     }
 
     //设置参考源(0:内部参考 1:内部扫描 2:外部参考)
-    public void setRefrence(int i) {
+    public void setReference(int i) {
         String sI = "" + i;
         String msg = LCommand.FMOD.replace("<i>", sI);
         portController.sendmessage(serialPort, msg);
     }
 
     //设置参考源相位
-    public void setRefrencePash(double pash){
+    public void setReferencePash(double pash){
         String sPash = "" + pash;
-        String msg = LCommand.PASH.replace("<x>", sPash);
+        String msg = LCommand.PHAS.replace("<x>", sPash);
         portController.sendmessage(serialPort, msg);
     }
 
     //设置参考源频率（仅在内部参考源时可用）
-    public void setRefrenceFreq(double freq){
+    public void setReferenceFreq(double freq){
         String sFreq = "" + freq;
         String msg = LCommand.FREQ.replace("<f>", sFreq);
         portController.sendmessage(serialPort, msg);
@@ -145,7 +161,7 @@ public class AmplifierController {
     }
 
     //关闭接口
-    public void closePort(){
+    public void closeController(){
         portController.ClosePort(serialPort);
     }
 }

@@ -8,9 +8,10 @@ import com.la.VISA.VISAController;
  */
 public class SignalVISAController {
 
-    VISAController visaController = new VISAController();
+    public VISAController visaController;
 
-    public void initController(String ip){
+    public SignalVISAController(String ip){
+        visaController = new VISAController();
         visaController.open(ip);
     }
 
@@ -73,6 +74,15 @@ public class SignalVISAController {
         String amplitude = "" + amp;
         String msg = SCommand.signal_amplitude.replace("<channel>", chan);
         msg = msg.replace("<amp>", amplitude);
+        visaController.writeCmd(msg);
+    }
+
+    //信号相位：°
+    public void setSignalPhase(int channel, double phase){
+        String chan = "" + channel;
+        String pha = "" + phase;
+        String msg = SCommand.signal_amplitude.replace("<channel>", chan);
+        msg = msg.replace("<phase>", pha);
         visaController.writeCmd(msg);
     }
 

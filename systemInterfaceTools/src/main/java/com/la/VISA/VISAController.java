@@ -6,7 +6,7 @@ import com.sun.jna.ptr.LongByReference;
 
 /**
  * @author LA
- * @createDate 2023-02-22-16:07
+ * @createDate 2023-02-24-16:07
  */
 public class VISAController {
 

@@ -20,8 +20,8 @@ public class LCommand {
     public static String FMOD = "FMOD <i>" + LF;
 
     //查询和设置参考源的相位改变量
-    public static String QPASH = "PASH?" + LF;
-    public static String PASH = "PASH <x>" + LF;
+    public static String QPHAS = "PHAS?" + LF;
+    public static String PHAS = "PHAS <x>" + LF;
 
     //查询参考源频率(HZ)
     public static String QFREQ = "FREQ?" + LF;

@@ -12,7 +12,7 @@ public class VISAControllerTest {
     @Test
     public void testOpen(){
         VISAController vController = new VISAController();
-        boolean open = vController.open("ASRL2::INSTR");
+        boolean open = vController.open("ASRL3::INSTR");
         System.out.println(open);
         boolean close = vController.close();
         System.out.println(close);

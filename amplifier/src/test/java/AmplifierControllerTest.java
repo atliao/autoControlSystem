@@ -19,23 +19,23 @@ public class AmplifierControllerTest {
         Thread.sleep(100);
 
         //查询参考源
-        String refrence = amplifierController.QueryRefrence();
+        String refrence = amplifierController.QueryReference();
         System.out.println("参考源refrence: " + refrence);
 
         Thread.sleep(100);
 
         //设置参考源
-        amplifierController.setRefrence(0);
+        amplifierController.setReference(0);
 
         Thread.sleep(100);
 
         //设置参考源相位
-        amplifierController.setRefrencePash(0);
+        amplifierController.setReferencePash(0);
 
         Thread.sleep(100);
 
         //设置参考源频率
-        amplifierController.setRefrenceFreq(1000);
+        amplifierController.setReferenceFreq(1000);
 
         Thread.sleep(100);
 

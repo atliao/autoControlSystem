@@ -32,6 +32,9 @@ public class SCommand {
     //设置振幅(95ms)
     public static String signal_amplitude =":SOURce<channel>:VOLTager:LEVel:IMMediate:AMPLitude <amp>VPP";
 
+    //设置相位(20ms) 单位 °
+    public static String signal_phase = ":SOURce<channel>:PHASe:ADJust <phase>DEG";
+
     //设置开关（开启和关闭信道）(15ms)
     public static String channel_on = ":OUTPut<channel>:STATe ON";
     public static String channel_off = ":OUTPut<channel>:STATe OFF";
