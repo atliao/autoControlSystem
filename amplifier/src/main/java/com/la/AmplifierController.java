@@ -27,7 +27,7 @@ public class AmplifierController {
 
         //setLocalFounction(localMode);
         setReference(reference);
-        setReferencePash(phas);
+        setReferencePhas(phas);
         //setSineAmplitude(sineV);
         setSourceIn(sourceInMode);
         //setOutSignal(1,0);
@@ -38,9 +38,9 @@ public class AmplifierController {
         String res = "";
         try {
             portController.sendmessage(serialPort, LCommand.OUTX);
-            Thread.sleep(100);
+            Thread.sleep(200);
             portController.sendmessage(serialPort, LCommand.QID);
-            Thread.sleep(100);
+            Thread.sleep(200);
             res = portController.readmessage(serialPort);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -51,9 +51,9 @@ public class AmplifierController {
     //查询参考源
     public String QueryReference() throws Exception{
         portController.sendmessage(serialPort,LCommand.OUTX);
-        Thread.sleep(100);
+        Thread.sleep(200);
         portController.sendmessage(serialPort, LCommand.QFMOD);
-        Thread.sleep(100);
+        Thread.sleep(200);
         String res = portController.readmessage(serialPort);
         return res;
     }
@@ -65,13 +65,32 @@ public class AmplifierController {
         portController.sendmessage(serialPort, msg);
     }
 
+    //查询相位
+    public String QueryReferencePhas() throws Exception{
+        portController.sendmessage(serialPort, LCommand.OUTX);
+        Thread.sleep(200);
+        portController.sendmessage(serialPort, LCommand.QPHAS);
+        Thread.sleep(200);
+        String res = portController.readmessage(serialPort);
+        return res;
+    }
+
     //设置参考源相位
-    public void setReferencePash(double pash){
+    public void setReferencePhas(double pash){
         String sPash = "" + pash;
         String msg = LCommand.PHAS.replace("<x>", sPash);
         portController.sendmessage(serialPort, msg);
     }
 
+    //查询参考源频率
+    public String QueryReferenceFreq() throws Exception{
+        portController.sendmessage(serialPort, LCommand.OUTX);
+        Thread.sleep(200);
+        portController.sendmessage(serialPort, LCommand.QFREQ);
+        Thread.sleep(200);
+        String res = portController.readmessage(serialPort);
+        return res;
+    }
     //设置参考源频率（仅在内部参考源时可用）
     public void setReferenceFreq(double freq){
         String sFreq = "" + freq;
@@ -82,9 +101,9 @@ public class AmplifierController {
     //查询正弦信号的振幅(V)
     public String QuerySineAmplitude() throws Exception{
         portController.sendmessage(serialPort, LCommand.OUTX);
-        Thread.sleep(100);
+        Thread.sleep(200);
         portController.sendmessage(serialPort, LCommand.QSLVL);
-        Thread.sleep(100);
+        Thread.sleep(200);
         String res = portController.readmessage(serialPort);
         return res;
     }
@@ -99,9 +118,9 @@ public class AmplifierController {
     //查询输入源模式（0：A，1：A-B，2：I）
     public String QuerySourceIn() throws Exception{
         portController.sendmessage(serialPort, LCommand.OUTX);
-        Thread.sleep(100);
+        Thread.sleep(200);
         portController.sendmessage(serialPort, LCommand.QISRC);
-        Thread.sleep(100);
+        Thread.sleep(200);
         String res = portController.readmessage(serialPort);
         return res;
     }
@@ -116,9 +135,9 @@ public class AmplifierController {
     //查询输入信号的电压(V)
     public String QuerySourceAmplitude() throws Exception{
         portController.sendmessage(serialPort, LCommand.OUTX);
-        Thread.sleep(100);
+        Thread.sleep(200);
         portController.sendmessage(serialPort, LCommand.QOUTP);
-        Thread.sleep(100);
+        Thread.sleep(200);
         String res = portController.readmessage(serialPort);
         return res;
     }
@@ -128,9 +147,9 @@ public class AmplifierController {
         String sCh = "" + ch;
         String msg = LCommand.QFOUT.replace("<ch>", sCh);
         portController.sendmessage(serialPort, LCommand.OUTX);
-        Thread.sleep(100);
+        Thread.sleep(200);
         portController.sendmessage(serialPort, msg);
-        Thread.sleep(100);
+        Thread.sleep(200);
         String res = portController.readmessage(serialPort);
         return res;
     }
@@ -146,9 +165,9 @@ public class AmplifierController {
     //查询本地或远程功能(0:本地模式 1:远程模式 2:LOCAL LOCKOUT)
     public String QueryLoclalFounction() throws Exception{
         portController.sendmessage(serialPort, LCommand.OUTX);
-        Thread.sleep(100);
+        Thread.sleep(200);
         portController.sendmessage(serialPort, LCommand.QLOCL);
-        Thread.sleep(100);
+        Thread.sleep(200);
         String res = portController.readmessage(serialPort);
         return res;
     }

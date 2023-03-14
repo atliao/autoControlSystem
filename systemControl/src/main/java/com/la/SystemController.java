@@ -2,7 +2,7 @@ package com.la;
 
 /**
  * @author LA
- * @createDate 2023-03-02-11:58
+ * @createDate 2023-03-04-11:58
  */
 public class SystemController {
 
@@ -47,8 +47,9 @@ public class SystemController {
         signalController.setSignalPhase(channel, phase);
     }
 
-    public void setAdjust(int channel, double amp, double phase){
+    public void setAdjust(int channel, double amp, double phase) throws InterruptedException {
         signalController.setSignalAmplitude(channel, amp);
+        Thread.sleep(100);
         signalController.setSignalPhase(channel, phase);
     }
 
@@ -60,19 +61,29 @@ public class SystemController {
         signalController.OutputOff(channel);
     }
 
+    int initChannel = 10;
     public double readShiftVoltage(int switchChannel) throws Exception {
-        switchController.change(switchChannel);
+        switchController.openChannel(initChannel);
+        Thread.sleep(100);
+        switchController.closeChannel(switchChannel);
+        initChannel = switchChannel;
         String amplitude = amplifierController.QuerySourceAmplitude();
         return Double.valueOf(amplitude);
     }
 
     public double readAdjustVoltage(int switchChannel) throws Exception {
-        switchController.change(switchChannel);
+        switchController.openChannel(initChannel);
+        Thread.sleep(100);
+        switchController.closeChannel(switchChannel);
+        initChannel = switchChannel;
         String amplitude = amplifierController.QuerySourceAmplitude();
         return Double.valueOf(amplitude);
     }
     public double readSensorVoltage(int switchChannel) throws Exception {
-        switchController.change(switchChannel);
+        switchController.openChannel(initChannel);
+        Thread.sleep(100);
+        switchController.closeChannel(switchChannel);
+        initChannel = switchChannel;
         String amplitude = amplifierController.QuerySourceAmplitude();
         return Double.valueOf(amplitude);
     }

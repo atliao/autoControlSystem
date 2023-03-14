@@ -2,7 +2,7 @@ package com.la;
 
 /**
  * @author LA
- * @createDate 2023-03-06-17:03
+ * @createDate 2023-03-08-17:03
  */
 public class Auto {
 
@@ -25,7 +25,7 @@ public class Auto {
         //1.初始化系统
         systemController.initSystem();
 
-        //2.开启源换能器 (设置频率、振幅、相位)
+        //2.驱动源换能器 (设置频率、振幅、相位)
         systemController.setSource(1, sourceFreq, sourceAmp, sourcePhase);
         systemController.start(1);
 
@@ -34,28 +34,20 @@ public class Auto {
         double adjustAmp = 1.0;
         double adjustPhase = 0;
 
-        //3.1 设置补偿电压
+        //3.1 驱动补偿换能器
         systemController.setAdjustInit(2, sourceFreq, adjustAmp, adjustPhase);
         systemController.start(2);
         double shiftV = systemController.readShiftVoltage(1);
 
         //3.2 调节补偿电压
-        boolean flag = true;
+        double a = 0.8;
         while(shiftV > 0.00002){
             //********************************平衡算法**********************************//
             double tmp = shiftV;
-            if(flag == true){
-                adjustAmp = adjustAmp + adjustAmp/2.0;
-            }else {
-                adjustAmp = adjustAmp - adjustAmp/2.0;
-            }
+
             systemController.setAdjust(2, adjustAmp, adjustPhase);
             shiftV = systemController.readShiftVoltage(1);
-            if(shiftV > tmp){
-                flag = false;
-            }else {
-                flag = true;
-            }
+
         }
 
         //4.读取补偿电压

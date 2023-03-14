@@ -1,7 +1,9 @@
 package com.la.VISA;
 
 import com.sun.jna.Memory;
+import com.sun.jna.NativeLibrary;
 import com.sun.jna.NativeLong;
+import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 
 /**
@@ -10,6 +12,7 @@ import com.sun.jna.ptr.LongByReference;
  */
 public class VISAController {
 
+    private static final IntByReference pValue = new IntByReference(0);
     LongByReference defaultSession;
     LongByReference vipSession;
     VISA visa = VISA.INSTANCE;
@@ -56,6 +59,20 @@ public class VISAController {
         }
 
         return true;
+    }
+
+    public void setParameter(){
+        NativeLong a = new NativeLong(vipSession.getValue());
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_BAUD, 9600);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_DATA_BITS, 8);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_PARITY, 0);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_FLOW_CNTRL, 0);
+    }
+
+    public int viGetAttribute(long attrName)  {
+        NativeLong a = new NativeLong(vipSession.getValue());
+        VISA.INSTANCE.viGetAttribute(a, attrName, pValue.getPointer());
+        return pValue.getValue();
     }
 
     public boolean writeCmd(String cmdStr) {

@@ -52,23 +52,86 @@ public class SignalVISAController {
 
         //信号模式：连续
         String chan4 = "" + channel;
-        String msg4 = SCommand.signal_mode.replace("<channel>", chan4);
+        String msg4 = SCommand.signal_continuous_mode.replace("<channel>", chan4);
         visaController.writeCmd(msg4);
 
         Thread.sleep(100);
     }
 
+    //查看是否为连续模式
+    public String queryContinuous(int channel) throws InterruptedException {
+        String chan = "" + channel;
+        String msg = SCommand.query_signal_continuous_mode.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+        Thread.sleep(300);
+        String res = visaController.readResult();
+        return res;
+    }
 
-    //信号频率：KHz
+    //查询频率模式
+    public String queryFrequencyMode(int channel) throws InterruptedException {
+        String chan = "" + channel;
+        String msg = SCommand.query_signal_frequncy_mode.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+        Thread.sleep(300);
+        String res = visaController.readResult();
+        return res;
+    }
+
+    //设置频率模式
+    public void setSignalFrequencyMode(int channel){
+        String chan = "" + channel;
+        String msg = SCommand.signal_frequncy_mode.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+    }
+
+    //查询信号频率
+    public String querySignalFrequency(int channel) throws InterruptedException {
+        String chan = "" + channel;
+        String msg = SCommand.query_signal_frequency.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+        Thread.sleep(300);
+        String res = visaController.readResult();
+        return res;
+    }
+
+    //设置信号频率：KHz
     public void setSignalFrequency(int channel, double freq){
         String chan = "" + channel;
         String frequency = "" + freq;
-        String msg = SCommand.signal_cw_frequency.replace("<channel>", chan);
+        String msg = SCommand.signal_frequency.replace("<channel>", chan);
         msg = msg.replace("<freq>", frequency);
         visaController.writeCmd(msg);
     }
 
-    //信号振幅：VPP
+    //查询振幅模式
+    public String queryAmplitudeMode(int channel) throws InterruptedException {
+        String chan = "" + channel;
+        String msg = SCommand.query_signal_amplitude_mode.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+        Thread.sleep(300);
+        String res = visaController.readResult();
+        return res;
+    }
+
+    //设置振幅模式
+    public void setSignalAmplitudeMode(int channel){
+        String chan = "" + channel;
+        String msg = SCommand.signal_amplitude_mode.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+    }
+
+    //查询信号振幅
+    public String querySignalAmplitude(int channel) throws InterruptedException {
+        String chan = "" + channel;
+        String msg = SCommand.query_signal_amplitude.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+        Thread.sleep(300);
+        String res = visaController.readResult();
+        return res;
+    }
+
+    //设置信号振幅：VPP
     public void setSignalAmplitude(int channel, double amp){
         String chan = "" + channel;
         String amplitude = "" + amp;
@@ -77,11 +140,21 @@ public class SignalVISAController {
         visaController.writeCmd(msg);
     }
 
-    //信号相位：°
+    //查询信号相位
+    public String querySignalPhase(int channel) throws InterruptedException {
+        String chan = "" + channel;
+        String msg = SCommand.query_signal_phase.replace("<channel>", chan);
+        visaController.writeCmd(msg);
+        Thread.sleep(300);
+        String res = visaController.readResult();
+        return res;
+    }
+
+    //设置信号相位：°
     public void setSignalPhase(int channel, double phase){
         String chan = "" + channel;
         String pha = "" + phase;
-        String msg = SCommand.signal_amplitude.replace("<channel>", chan);
+        String msg = SCommand.signal_phase.replace("<channel>", chan);
         msg = msg.replace("<phase>", pha);
         visaController.writeCmd(msg);
     }

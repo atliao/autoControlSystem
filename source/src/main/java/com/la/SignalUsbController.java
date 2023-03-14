@@ -49,7 +49,7 @@ public class SignalUsbController {
 
     public void setSignalMode(int channel){
         String chan = "" + channel;
-        String msg = SCommand.signal_mode.replace("<channel>", chan);
+        String msg = SCommand.signal_continuous_mode.replace("<channel>", chan);
         System.out.print(msg + "***************************************");
         //usbController.sendMessage(iface, msg);
     }
@@ -58,7 +58,7 @@ public class SignalUsbController {
     public void setSignalFrequency(int channel, double freq){
         String chan = "" + channel;
         String frequency = "" + freq;
-        String msg = SCommand.signal_cw_frequency.replace("<channel>", chan);
+        String msg = SCommand.signal_frequency.replace("<channel>", chan);
         msg = msg.replace("<freq>", frequency);
         System.out.print(msg + "***************************************");
         //usbController.sendMessage(iface, msg);

@@ -36,7 +36,7 @@ public class LCommand {
     public static String QISRC = "ISRC?" + LF;
     public static String ISRC = "ISRC <i>" + LF;
 
-    //查询输入信号的电压（R）（Vsig的振幅）（在相位相同的情况下，也可以查询 X ：VsigCosΘ）
+    //查询输入信号的电压（R）（Vsig的振幅）（在相位相同的情况下，也可以查询 X(1) ：VsigCosΘ）
     public static String QOUTP = "OUTP? 3" + LF;
 
     //查询和设置CH1或CH2的输出：可选择X(Y)，R等
