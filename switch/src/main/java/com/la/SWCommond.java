@@ -8,6 +8,9 @@ public class SWCommond {
 
     public static String QueryID = "*IDN?";
 
+    public static String SetFuction = "FUNCtion <slot>,<1|2|3|4|WIRE1|WIRE2|BIWIRE2|WIRE4>";
+    public static String QueryFuction = "FUNCtion? <slot>";
+
     public static String QueryClose = "CLOSe:STATe?";
 
     public static String Close = "CLOSe (@snn)";

@@ -6,91 +6,155 @@ package com.la;
  */
 public class SystemController {
 
-    public SignalVISAController signalController;
-    public SwitchController switchController;
-    public AmplifierController amplifierController;
+    private SignalVISAController signalController;
+    private SwitchController switchController;
+    private AmplifierController amplifierController;
 
     //设备地址
-    public static String sourceIP = "ASRL2::INSTR";
-    public static String switchIP = "ASRL3::INSTR";
-    public static String amplifierCOM = "COM5";
+    private String sourceIP = "ASRL2::INSTR";
+    private String switchIP = "ASRL3::INSTR";
+    private String amplifierCOM = "COM5";
+
+    public SystemController() {
+    }
+
+    public SystemController(String sourceIP, String switchIP, String amplifierCOM) {
+        this.sourceIP = sourceIP;
+        this.switchIP = switchIP;
+        this.amplifierCOM = amplifierCOM;
+    }
 
     public void initSystem() throws Exception {
         signalController = new SignalVISAController(sourceIP);
         switchController = new SwitchController(switchIP);
         amplifierController = new AmplifierController(amplifierCOM);
 
-        signalController.initSignalChannel(1);
-        signalController.initSignalChannel(2);
-        switchController.initSwitch();
-        amplifierController.initAmplifier();
+        //signalController.initSignalChannel();
+        //switchController.initSwitch();
+        //amplifierController.initAmplifier();
     }
 
-    public void readIDs(){
+    //设备ID
+    public void readIDs() throws InterruptedException {
         String sourceID = signalController.readID();
         String switchID = switchController.readID();
-        String amplifierID = amplifierController.QueryID();
+        String amplifierID = amplifierController.readID();
         System.out.println(sourceID);
         System.out.println(switchID);
         System.out.println(amplifierID);
     }
 
-    public void setSource(int channel, double freq, double amp, double phase){
+    //源换能器
+    public void setSource(int channel, double freq, double amp, double phase) throws InterruptedException {
         signalController.setSignalFrequency(channel, freq);
         signalController.setSignalAmplitude(channel, amp);
         signalController.setSignalPhase(channel, phase);
     }
 
-    public void setAdjustInit(int channel, double freq, double amp, double phase){
-        signalController.setSignalFrequency(channel, freq);
-        signalController.setSignalAmplitude(channel, amp);
-        signalController.setSignalPhase(channel, phase);
-    }
+    //开启信号输出
+    public void start(int channel) throws InterruptedException {
 
-    public void setAdjust(int channel, double amp, double phase) throws InterruptedException {
-        signalController.setSignalAmplitude(channel, amp);
-        Thread.sleep(100);
-        signalController.setSignalPhase(channel, phase);
-    }
-
-    public void start(int channel){
         signalController.OutputOn(channel);
+
     }
 
-    public void stop(int channel){
+    //关闭信号输出
+    public void stop(int channel) throws InterruptedException {
+
         signalController.OutputOff(channel);
+
     }
 
-    int initChannel = 10;
-    public double readShiftVoltage(int switchChannel) throws Exception {
-        switchController.openChannel(initChannel);
-        Thread.sleep(100);
-        switchController.closeChannel(switchChannel);
-        initChannel = switchChannel;
+    //初始化补偿换能器
+    public void setAdjustInit(int channel, double freq, double amp, double phase) throws InterruptedException {
+        signalController.setSignalFrequency(channel, freq);
+        signalController.setSignalAmplitude(channel, amp);
+        signalController.setSignalPhase(channel, phase);
+    }
+
+    //调节补偿相位
+    public void adjustPhase(int channel, double phase) throws InterruptedException {
+
+        signalController.setSignalPhase(channel, phase);
+
+    }
+
+    //调节补偿电压
+    public void adjustAmplitude(int channel, double amp) throws InterruptedException {
+
+        signalController.setSignalAmplitude(channel, amp);
+
+    }
+
+    //读取补偿电压
+    public double readAdjustVoltage(int signalChannel) throws Exception {
+        String amplitude = signalController.querySignalAmplitude(signalChannel);
+        return Double.valueOf(amplitude);
+    }
+
+    //读取锁相检测电压
+    public double readVoltage() throws Exception {
         String amplitude = amplifierController.QuerySourceAmplitude();
         return Double.valueOf(amplitude);
     }
 
-    public double readAdjustVoltage(int switchChannel) throws Exception {
-        switchController.openChannel(initChannel);
-        Thread.sleep(100);
-        switchController.closeChannel(switchChannel);
-        initChannel = switchChannel;
-        String amplitude = amplifierController.QuerySourceAmplitude();
-        return Double.valueOf(amplitude);
-    }
-    public double readSensorVoltage(int switchChannel) throws Exception {
-        switchController.openChannel(initChannel);
-        Thread.sleep(100);
-        switchController.closeChannel(switchChannel);
-        initChannel = switchChannel;
-        String amplitude = amplifierController.QuerySourceAmplitude();
-        return Double.valueOf(amplitude);
+    //切换电子开关
+    public void closeChannel(int chan) throws InterruptedException {
+
+        switchController.closeChannel(chan);
+
     }
 
+    public void openChannel(int chan) throws InterruptedException {
+
+        switchController.openChannel(chan);
+
+    }
+
+    //关闭接口
     public void closeSystemControllers(){
         signalController.closeController();
         switchController.closeController();
         amplifierController.closeController();
+    }
+
+
+    //平衡算法
+    public double adjustMethod(int channel, double initAmp, double initPhase) throws Exception {
+
+        double aAmp = 1; //步长
+        double bAmp = 0.5; //步长因子
+
+        double amp = initAmp;
+        double aft = amp; //前锋
+
+        double res = readVoltage(); //读取锁相电压
+        double curRes;
+
+        int flag = 1; //正反标志
+
+        int i = 0; //记录次数
+
+        while(res > 0.01){
+
+            aft = aft + flag*aAmp;
+            //调整振幅
+            adjustAmplitude(channel, aft);
+            //待稳定
+            Thread.sleep(1000);
+            //读取当前电压
+            curRes = readVoltage();
+            System.out.println("第" + (++i) + "次调整: " + aft);
+            if(curRes < res){
+                amp = aft;
+                res = curRes;
+            }else{
+                flag = -flag;
+                aft = amp;
+                aAmp = aAmp*bAmp;
+            }
+
+        }
+        return amp;
     }
 }

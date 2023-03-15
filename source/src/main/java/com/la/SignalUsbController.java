@@ -54,7 +54,7 @@ public class SignalUsbController {
         //usbController.sendMessage(iface, msg);
     }
 
-    //KHz
+    //Hz
     public void setSignalFrequency(int channel, double freq){
         String chan = "" + channel;
         String frequency = "" + freq;

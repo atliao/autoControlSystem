@@ -9,14 +9,16 @@ public class Auto {
     public SystemController systemController;
 
     //源换能器 激励频率、振幅、相位
-    public static double sourceFreq; // KHz
-    public static double sourceAmp; // VPP
-    public static double sourcePhase; // °
+    public double sourceFreq; // KHz
+    public double sourceAmp; // VPP
+    public double sourcePhase; // °
 
     //补偿腔特征常数
-    public static double K = 2; // Pa/V
+    public double K = 2; // Pa/V
 
     public double AutoProcess(double freq, double amp, double phase) throws Exception {
+
+        systemController = new SystemController();
 
         sourceFreq = freq;
         sourceAmp = amp;
@@ -28,33 +30,39 @@ public class Auto {
         //2.驱动源换能器 (设置频率、振幅、相位)
         systemController.setSource(1, sourceFreq, sourceAmp, sourcePhase);
         systemController.start(1);
+        //待稳定
+        Thread.sleep(1000);
 
         //3.使位移传感器输出为 0
 
-        double adjustAmp = 1.0;
-        double adjustPhase = 0;
+        double initAdjustAmp = 1.0;
+        double initAdjustPhase = 0;
 
-        //3.1 驱动补偿换能器
-        systemController.setAdjustInit(2, sourceFreq, adjustAmp, adjustPhase);
+        //3.1 初始化补偿电压
+        systemController.setAdjustInit(2, sourceFreq, initAdjustAmp, initAdjustPhase);
         systemController.start(2);
-        double shiftV = systemController.readShiftVoltage(1);
+
+        systemController.closeChannel(100);
+        //待稳定
+        Thread.sleep(1000);
+
 
         //3.2 调节补偿电压
-        double a = 0.8;
-        while(shiftV > 0.00002){
-            //********************************平衡算法**********************************//
-            double tmp = shiftV;
-
-            systemController.setAdjust(2, adjustAmp, adjustPhase);
-            shiftV = systemController.readShiftVoltage(1);
-
+        double shiftV = systemController.readVoltage();
+        double finalAmp = 0;
+        if(shiftV > 0.01){
+            finalAmp = systemController.adjustMethod(2, initAdjustAmp, initAdjustPhase);
         }
 
         //4.读取补偿电压
-        double AdjustV = systemController.readAdjustVoltage(2);
+        //double AdjustV = systemController.readAdjustVoltage(2);
+        double AdjustV = finalAmp;
 
         //5.读取水听器输出电压
-        double SensorV = systemController.readSensorVoltage(3);
+        systemController.openChannel(100);
+        systemController.closeChannel(101);
+        double SensorV = systemController.readVoltage();
+        systemController.openChannel(101);
 
         //6.计算声压灵敏度
         double sensitivity = SensorV / (K * AdjustV);

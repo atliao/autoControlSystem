@@ -19,6 +19,10 @@ public class LCommand {
     //设置参考源 0:内部参考，1:内部扫描，2:外部参考
     public static String FMOD = "FMOD <i>" + LF;
 
+    //查询外部引用的斜率
+    public static String RSLP = "RSLP 0" + LF;
+    public static String QRSLP = "RSLP?" + LF;
+
     //查询和设置参考源的相位改变量
     public static String QPHAS = "PHAS?" + LF;
     public static String PHAS = "PHAS <x>" + LF;

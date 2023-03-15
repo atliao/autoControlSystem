@@ -35,7 +35,6 @@ public class VISAControllerTest {
                             "停止位: " + i3 + "\n" +
                             "奇偶校验: " + i4 +  "\n" +
                             "限流: " + i5);
-        vController.writeCmd("abcdefghijklmnopqrstuvwxyz");
         boolean close = vController.close();
         System.out.println(close);
     }

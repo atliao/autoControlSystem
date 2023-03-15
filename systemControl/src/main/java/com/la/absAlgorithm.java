@@ -2,10 +2,9 @@ package com.la;
 
 /**
  * @author LA
- * @createDate 2023-03-07-17:13
+ * @createDate 2023-03-15-16:04
  */
-public class Adjust {
-
+public class absAlgorithm {
     double x = 4.73;
 
     public double ad1(double init, double a, double b){
@@ -93,18 +92,18 @@ public class Adjust {
                 y = aft;
                 res = curRes;
             }
-
         }
         return y;
     }
 
 
     public static void main(String[] args) {
-        double res1 = new Adjust().ad1(0,0.8,0.5);
+        double res1 = new absAlgorithm().ad1(0,0.8,0.5);
         System.out.println("最终结果: " + res1);
-        double res2 = new Adjust().ad2(0,0.8,0.5);
+        double res2 = new absAlgorithm().ad2(0,0.8,0.5);
         System.out.println("最终结果: " + res2);
-        double res3 = new Adjust().ad3(0,4,0.5);
+        double res3 = new absAlgorithm().ad3(0,4,0.5);
         System.out.println("最终结果: " + res3);
     }
+
 }
