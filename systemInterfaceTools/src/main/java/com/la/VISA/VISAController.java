@@ -61,12 +61,13 @@ public class VISAController {
         return true;
     }
 
-    public void setParameter(){
+    public void setParameter(int baud, int dataBits, int parity, int flowCntrl){
         NativeLong a = new NativeLong(vipSession.getValue());
-        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_BAUD, 9600);
-        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_DATA_BITS, 8);
-        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_PARITY, 0);
-        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_FLOW_CNTRL, 0);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_BAUD, baud);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_DATA_BITS, dataBits);
+        //VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_STOP_BITS, 10);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_PARITY, parity);
+        VISA.INSTANCE.viSetAttribute(a, VISA.VI_ATTR_ASRL_FLOW_CNTRL, flowCntrl);
     }
 
     public int viGetAttribute(long attrName)  {

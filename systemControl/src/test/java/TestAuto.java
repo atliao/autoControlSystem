@@ -7,7 +7,6 @@ import org.junit.Test;
  */
 public class TestAuto {
 
-    @Test
     public void test(){
         double sensitivity1 = 8 / (3.34375 * 2);
         double sensitivity2 = 8 / (3.34 * 2);

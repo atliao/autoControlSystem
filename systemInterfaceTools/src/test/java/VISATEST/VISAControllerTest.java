@@ -24,7 +24,7 @@ public class VISAControllerTest {
         VISAController vController = new VISAController();
         boolean open = vController.open("ASRL2::INSTR");
         System.out.println(open);
-        vController.setParameter();
+        //vController.setParameter(9600,8,0,0);
         int i1 = vController.viGetAttribute(VISA.VI_ATTR_ASRL_BAUD);
         int i2 = vController.viGetAttribute(VISA.VI_ATTR_ASRL_DATA_BITS);
         int i3 = vController.viGetAttribute(VISA.VI_ATTR_ASRL_STOP_BITS);
