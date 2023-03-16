@@ -42,6 +42,9 @@ public class Auto {
         systemController.setAdjustInit(2, sourceFreq, initAdjustAmp, initAdjustPhase);
         systemController.start(2);
 
+        //测试算法
+        systemController.test(initAdjustAmp);
+
         systemController.closeChannel(100);
         //待稳定
         Thread.sleep(1000);
@@ -71,6 +74,8 @@ public class Auto {
         systemController.stop(1);
         systemController.stop(2);
         systemController.closeSystemControllers();
+
+
 
         return sensitivity;
 

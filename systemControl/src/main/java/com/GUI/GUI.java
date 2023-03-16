@@ -140,7 +140,7 @@ public class GUI extends JFrame {
 
 
         //***************************************************设置窗口参数***************************************************
-        this.setTitle("Laser-Control");//标题
+        this.setTitle("Auto-Control");//标题
         this.setBounds(550,100,750,780);//大小和位置
         this.setResizable(false);//大小不可变
         this.setVisible(true);//可见
@@ -154,39 +154,6 @@ public class GUI extends JFrame {
     }
 
     //**************************************************下面为模块组件的类定义***********************************************************
-    class Energy_control_mode extends AbstractListModel<String> implements ComboBoxModel<String> { //能量控制模式选项框
-        /**
-         *
-         */
-        private static final long serialVersionUID = 1L;
-        String selecteditem = "ON";
-        String[] test = { "ON", "OFF"};
-
-        public String getElementAt(int index) {
-            return test[index];
-        }
-
-        public int getSize() {
-            return test.length;
-        }
-
-        public void setSelectedItem(Object item) {
-            selecteditem = (String) item;
-        }
-
-        public Object getSelectedItem() {
-            return selecteditem;
-        }
-
-        public int getIndex() {
-            for (int i = 0; i < test.length; i++) {
-                if (test[i].equals(getSelectedItem()))
-                    return i;
-            }
-            return 0;
-        }
-    }
-
     class Mode extends AbstractListModel<String> implements ComboBoxModel<String> { //能量控制模式选项框
         /**
          *

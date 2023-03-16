@@ -12,8 +12,8 @@ public class SystemController {
 
     //设备地址
     private String sourceIP = "ASRL2::INSTR";
-    private String switchIP = "ASRL3::INSTR";
-    private String amplifierCOM = "COM5";
+    private String switchIP = "ASRL4::INSTR";
+    private String amplifierCOM = "ASRL6::INSTR";
 
     public SystemController() {
     }
@@ -135,11 +135,13 @@ public class SystemController {
 
         int i = 0; //记录次数
 
-        while(res > 0.01){
+        while(res > 0.0001){
 
             aft = aft + flag*aAmp;
             //调整振幅
             adjustAmplitude(channel, aft);
+            //测试算法
+            test(aft);
             //待稳定
             Thread.sleep(1000);
             //读取当前电压
@@ -156,5 +158,12 @@ public class SystemController {
 
         }
         return amp;
+    }
+
+    //测试平衡算法
+    public void test(double amp){
+        String msg = "sourceAmp: " + amp;
+        amplifierController.test(msg);
+
     }
 }

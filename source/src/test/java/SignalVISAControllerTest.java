@@ -67,6 +67,7 @@ public class SignalVISAControllerTest {
 
     @Test
     public void testSetting() throws Exception {
+        signalVISAController = new SignalVISAController("ASRL2::INSTR");
         //初始化
         //signalVISAController.initSignalChannel(1);
 

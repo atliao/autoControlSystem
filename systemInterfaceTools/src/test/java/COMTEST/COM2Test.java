@@ -10,7 +10,7 @@ import gnu.io.SerialPort;
 public class COM2Test {
     public static void main(String[] args) {
         PortController portController = new PortController();
-        String test = "hello,COM3!";
+        String test = "hello,COM1!";
         SerialPort port = portController.openPort("COM2");
         portController.sendmessage(port, test);
         try {

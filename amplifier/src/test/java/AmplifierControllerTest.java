@@ -11,16 +11,16 @@ public class AmplifierControllerTest {
 
     @Test
     public void testReadID() throws InterruptedException {
-        amplifierController = new AmplifierController("COM2");
+        amplifierController = new AmplifierController("ASRL6::INSTR");
         String id = amplifierController.readID();
-        System.out.println("id: " + id);
+        System.out.println("device id: " + id);
         amplifierController.closeController();
     }
 
 
     @Test
     public void testQuery() throws Exception {
-        amplifierController = new AmplifierController("COM2");
+        amplifierController = new AmplifierController("ASRL6::INSTR");
 
         String reference = amplifierController.QueryReference();
         System.out.println("参考源: " + reference);
@@ -30,6 +30,9 @@ public class AmplifierControllerTest {
 
         String referencePhas = amplifierController.QueryReferencePhas();
         System.out.println("参考相位: " + referencePhas);
+
+        String referenceSlop = amplifierController.queryReferenceSlop();
+        System.out.println("参考源斜率: " + referenceSlop);
 
         String sineAmplitude = amplifierController.QuerySineAmplitude();
         System.out.println("参考正弦输出振幅: " + sineAmplitude);
@@ -43,13 +46,13 @@ public class AmplifierControllerTest {
 
     @Test
     public void testSetting() throws InterruptedException {
-        amplifierController = new AmplifierController("COM2");
+        amplifierController = new AmplifierController("ASRL6::INSTR");
 
         //设置参考源(2:外部参考源)
         amplifierController.setReference(2);
 
         //设置参考频率（仅内部振荡）
-        amplifierController.setReferenceFreq(2.9);
+        amplifierController.setReferenceFreq(1000);
 
         //设置参考相位
         amplifierController.setReferencePhas(0);
@@ -65,7 +68,7 @@ public class AmplifierControllerTest {
 
     @Test
     public void testReadSourceAmplitude() throws Exception {
-        amplifierController = new AmplifierController("COM2");
+        amplifierController = new AmplifierController("ASRL6::INSTR");
         String sourceAmplitude = amplifierController.QuerySourceAmplitude();
         System.out.println("测量输入信号振幅: " + sourceAmplitude);
         amplifierController.closeController();
