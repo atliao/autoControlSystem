@@ -45,7 +45,7 @@ public class SystemController {
     }
 
     //源换能器
-    public void setSource(int channel, double freq, double amp, double phase) throws InterruptedException {
+    public void setSource(int channel, int freq, double amp, double phase) throws InterruptedException {
         signalController.setSignalFrequency(channel, freq);
         signalController.setSignalAmplitude(channel, amp);
         signalController.setSignalPhase(channel, phase);
@@ -66,7 +66,7 @@ public class SystemController {
     }
 
     //初始化补偿换能器
-    public void setAdjustInit(int channel, double freq, double amp, double phase) throws InterruptedException {
+    public void setAdjustInit(int channel, int freq, double amp, double phase) throws InterruptedException {
         signalController.setSignalFrequency(channel, freq);
         signalController.setSignalAmplitude(channel, amp);
         signalController.setSignalPhase(channel, phase);
@@ -120,7 +120,7 @@ public class SystemController {
 
 
     //平衡算法
-    public double adjustMethod(int channel, double initAmp, double initPhase) throws Exception {
+    public double adjustMethod(int channel, double initAmp, double initPhase, int waitTime) throws Exception {
 
         double aAmp = 1; //步长
         double bAmp = 0.5; //步长因子
@@ -135,7 +135,7 @@ public class SystemController {
 
         int i = 0; //记录次数
 
-        while(res > 0.0001){
+        while(res > 0.001){
 
             aft = aft + flag*aAmp;
             //调整振幅
@@ -143,7 +143,7 @@ public class SystemController {
             //测试算法
             test(aft);
             //待稳定
-            Thread.sleep(1000);
+            Thread.sleep(waitTime);
             //读取当前电压
             curRes = readVoltage();
             System.out.println("第" + (++i) + "次调整: " + aft);

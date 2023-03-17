@@ -126,7 +126,7 @@ public class SignalVISAController {
     }
 
     //设置信号频率：Hz
-    public void setSignalFrequency(int channel, double freq) throws InterruptedException {
+    public void setSignalFrequency(int channel, int freq) throws InterruptedException {
         String chan = "" + channel;
         String frequency = "" + freq;
         String msg = SCommand.signal_frequency.replace("<channel>", chan);

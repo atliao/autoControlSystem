@@ -9,20 +9,39 @@ public class Auto {
     public SystemController systemController;
 
     //源换能器 激励频率、振幅、相位
-    public double sourceFreq; // KHz
+    public int sourceFreq; // KHz
     public double sourceAmp; // VPP
     public double sourcePhase; // °
 
     //补偿腔特征常数
     public double K = 2; // Pa/V
 
-    public double AutoProcess(double freq, double amp, double phase) throws Exception {
+    public double AutoProcess(int freq, double amp, double phase) throws Exception {
 
         systemController = new SystemController();
 
         sourceFreq = freq;
         sourceAmp = amp;
         sourcePhase = phase;
+
+        int waitTime;
+        switch (freq){
+            case 500:
+                waitTime = 1000;
+                break;
+            case 1000:
+                waitTime = 800;
+                break;
+            case 1500:
+                waitTime = 500;
+                break;
+            case 2000:
+                waitTime = 300;
+                break;
+            default:
+                waitTime = 100;
+
+        }
 
         //1.初始化系统
         systemController.initSystem();
@@ -31,7 +50,7 @@ public class Auto {
         systemController.setSource(1, sourceFreq, sourceAmp, sourcePhase);
         systemController.start(1);
         //待稳定
-        Thread.sleep(1000);
+        Thread.sleep(waitTime);
 
         //3.使位移传感器输出为 0
 
@@ -47,15 +66,12 @@ public class Auto {
 
         systemController.closeChannel(100);
         //待稳定
-        Thread.sleep(1000);
+        Thread.sleep(waitTime);
 
 
         //3.2 调节补偿电压
-        double shiftV = systemController.readVoltage();
         double finalAmp = 0;
-        if(shiftV > 0.01){
-            finalAmp = systemController.adjustMethod(2, initAdjustAmp, initAdjustPhase);
-        }
+        finalAmp = systemController.adjustMethod(2, initAdjustAmp, initAdjustPhase, waitTime);
 
         //4.读取补偿电压
         //double AdjustV = systemController.readAdjustVoltage(2);
@@ -74,7 +90,6 @@ public class Auto {
         systemController.stop(1);
         systemController.stop(2);
         systemController.closeSystemControllers();
-
 
 
         return sensitivity;
