@@ -123,15 +123,15 @@ public class SystemController {
     public double adjustMethod(int channel, double initAmp, double initPhase, int waitTime) throws Exception {
 
         double aAmp = 1; //步长
-        double bAmp = 0.5; //步长因子
+        double bAmp = 0.5; //衰减因子
 
-        double amp = initAmp;
+        double amp = initAmp;//当前记录补偿电压
         double aft = amp; //前锋
 
         double res = readVoltage(); //读取锁相电压
         double curRes;
 
-        int flag = 1; //正反标志
+        int flag = 1; //正反调节标志
 
         int i = 0; //记录次数
 

@@ -2,7 +2,6 @@ package com.GUI;
 
 import com.la.Auto;
 
-import javax.accessibility.AccessibleContext;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -103,6 +102,8 @@ public class GUIForOneFreq extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 start.setEnabled(false);
+                result2.setText("");
+                jt.setForeground(Color.BLUE);
 
                 Thread A = new Thread(new Runnable() {
                     @Override
@@ -141,7 +142,8 @@ public class GUIForOneFreq extends JFrame {
 
                         } catch (Exception exception) {
                             exception.printStackTrace();
-                            jt.append(" Something error...");
+                            jt.setForeground(Color.RED);
+                            jt.append(" Error !\n\n");
                         }
                         start.setEnabled(true);
                     }

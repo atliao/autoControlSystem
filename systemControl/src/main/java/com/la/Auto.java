@@ -70,7 +70,7 @@ public class Auto {
 
 
         //3.2 调节补偿电压
-        double finalAmp = 0;
+        double finalAmp;
         finalAmp = systemController.adjustMethod(2, initAdjustAmp, initAdjustPhase, waitTime);
 
         //4.读取补偿电压

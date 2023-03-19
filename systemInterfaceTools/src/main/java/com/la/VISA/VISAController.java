@@ -1,7 +1,6 @@
 package com.la.VISA;
 
 import com.sun.jna.Memory;
-import com.sun.jna.NativeLibrary;
 import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
