@@ -12,7 +12,7 @@ import com.sun.jna.ptr.LongByReference;
  */
 public interface VISA extends Library {
 
-    VISA INSTANCE = (VISA) Native.loadLibrary("visa64", VISA.class);
+    VISA INSTANCE = (VISA) Native.loadLibrary("visa32", VISA.class);
 
     public static final long VI_ATTR_ASRL_BAUD = (0x3FFF0021);
     public static final long VI_ATTR_ASRL_DATA_BITS = (0x3FFF0022);
