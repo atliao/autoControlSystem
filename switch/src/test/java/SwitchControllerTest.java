@@ -20,7 +20,7 @@ public class SwitchControllerTest {
 
     @Test
     public void testQueryParameter(){
-        switchController = new SwitchController("ASRL4::INSTR");
+        switchController = new SwitchController("ASRL2::INSTR");
         String parameter = switchController.queryParameter();
         System.out.println(parameter);
         switchController.closeController();
@@ -36,7 +36,7 @@ public class SwitchControllerTest {
 
     @Test
     public void testCloseAndOpen() throws InterruptedException {
-        switchController = new SwitchController("ASRL4::INSTR");
+        switchController = new SwitchController("ASRL2::INSTR");
         //switchController.initSwitch();
         switchController.closeChannel(100);
         Thread.sleep(5000);

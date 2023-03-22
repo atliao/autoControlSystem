@@ -17,7 +17,7 @@ public class COM1Test {
 
     public COM1Test() {
         PortController portController = new PortController();
-        SerialPort serialport = portController.openPort("COM1");
+        SerialPort serialport = portController.openPort("COM11");
 
         threadA = new Thread(new Runnable() {
             public void run() { // 重写run()方法

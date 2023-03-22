@@ -84,7 +84,8 @@ public class Auto {
         systemController.openChannel(101);
 
         //6.计算声压灵敏度
-        double sensitivity = SensorV / (K * AdjustV);
+        //double sensitivity = SensorV / (K * AdjustV);
+        double sensitivity = 11.7 / (K * AdjustV);
 
         //7.关闭系统
         systemController.stop(1);

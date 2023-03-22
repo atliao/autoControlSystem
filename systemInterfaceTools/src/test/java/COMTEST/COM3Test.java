@@ -17,7 +17,7 @@ public class COM3Test {
 
     public COM3Test() {
         PortController portController = new PortController();
-        SerialPort serialport = portController.openPort("COM3");
+        SerialPort serialport = portController.openPort("COM13");
 
         threadA = new Thread(new Runnable() {
             public void run() { // 重写run()方法

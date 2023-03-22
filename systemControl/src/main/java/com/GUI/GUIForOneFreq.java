@@ -141,9 +141,20 @@ public class GUIForOneFreq extends JFrame {
                             scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 
                         } catch (Exception exception) {
-                            exception.printStackTrace();
                             jt.setForeground(Color.RED);
-                            jt.append(" Error !\n\n");
+                            jt.append(" Error !\n");
+                            StackTraceElement[] stackTrace = exception.getStackTrace();
+                            StackTraceElement s = stackTrace[0];
+                            String message = s.getClassName();
+                            System.out.println(message);
+                            switch(message){
+                                case "java.lang.NumberFormatException":
+                                    jt.append(" Please enter an integer !\n");
+                                case "sun.misc.FloatingDecimal":
+                                    jt.append(" Please check the interface !\n");
+                            }
+                            exception.printStackTrace();
+
                         }
                         start.setEnabled(true);
                     }

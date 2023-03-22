@@ -11,7 +11,7 @@ public class AmplifierControllerTest {
 
     @Test
     public void testReadID() throws InterruptedException {
-        amplifierController = new AmplifierController("ASRL6::INSTR");
+        amplifierController = new AmplifierController("ASRL2::INSTR");
         String id = amplifierController.readID();
         System.out.println("device id: " + id);
         amplifierController.closeController();
@@ -20,7 +20,7 @@ public class AmplifierControllerTest {
 
     @Test
     public void testQuery() throws Exception {
-        amplifierController = new AmplifierController("ASRL6::INSTR");
+        amplifierController = new AmplifierController("ASRL2::INSTR");
 
         String reference = amplifierController.QueryReference();
         System.out.println("参考源: " + reference);

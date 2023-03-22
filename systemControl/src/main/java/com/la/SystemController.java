@@ -11,9 +11,9 @@ public class SystemController {
     private AmplifierController amplifierController;
 
     //设备地址
-    private String sourceIP = "ASRL2::INSTR";
-    private String switchIP = "ASRL4::INSTR";
-    private String amplifierCOM = "ASRL6::INSTR";
+    private String sourceIP = "ASRL10::INSTR";
+    private String switchIP = "ASRL12::INSTR";
+    private String amplifierCOM = "ASRL14::INSTR";
 
     public SystemController() {
     }

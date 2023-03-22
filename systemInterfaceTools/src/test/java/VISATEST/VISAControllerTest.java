@@ -22,7 +22,7 @@ public class VISAControllerTest {
     @Test
     public void testParameter() throws InterruptedException {
         VISAController vController = new VISAController();
-        boolean open = vController.open("ASRL2::INSTR");
+        boolean open = vController.open("ASRL3::INSTR");
         System.out.println(open);
         //vController.setParameter(9600,8,0,0);
         int i1 = vController.viGetAttribute(VISA.VI_ATTR_ASRL_BAUD);

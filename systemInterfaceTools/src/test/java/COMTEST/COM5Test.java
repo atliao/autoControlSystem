@@ -18,7 +18,7 @@ public class COM5Test {
 
     public COM5Test() {
         PortController portController = new PortController();
-        SerialPort serialport = portController.openPort("COM5");
+        SerialPort serialport = portController.openPort("COM15");
 
         threadA = new Thread(new Runnable() {
             public void run() { // 重写run()方法
