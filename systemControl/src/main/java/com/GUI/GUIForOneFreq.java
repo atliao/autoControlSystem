@@ -15,6 +15,11 @@ import java.util.Date;
  */
 public class GUIForOneFreq extends JFrame {
 
+    //设备地址
+    private String sourceIP = "ASRL10::INSTR";
+    private String switchIP = "ASRL12::INSTR";
+    private String amplifierCOM = "COM14";
+
     private double amplitude = 1.0;
     private double phase = 0;
 
@@ -108,7 +113,7 @@ public class GUIForOneFreq extends JFrame {
                 Thread A = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Auto auto = new Auto();
+                        Auto auto = new Auto(sourceIP, switchIP, amplifierCOM);
                         String freq = freq2.getText();
                         jt.append(" " + freq + " Hz measurement: starting...\n");
                         scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());//定位到监控兰最后一行
@@ -121,15 +126,14 @@ public class GUIForOneFreq extends JFrame {
                             Date date1 = new Date();
                             long startTime = date1.getTime();
                             //开始标定
-                            double sensitivity = auto.AutoProcess(Integer.valueOf(freq), amplitude, phase);
+                            double sensitivity = auto.AutoProcess(Double.valueOf(freq), amplitude, phase);
+
                             //记录结束时间
                             Date date2 = new Date();
                             long endTime = date2.getTime();
                             //计算标定时间
                             long timeL = endTime - startTime;
-                            double time = timeL/1000;
-                            DecimalFormat dfTime = new DecimalFormat("0.0");
-                            String resTime = dfTime.format(time);
+                            long resTime = timeL/1000;
 
                             //记录标定结果
                             DecimalFormat df = new DecimalFormat("0.000");
@@ -148,8 +152,6 @@ public class GUIForOneFreq extends JFrame {
                             String message = s.getClassName();
                             System.out.println(message);
                             switch(message){
-                                case "java.lang.NumberFormatException":
-                                    jt.append(" Please enter an integer !\n");
                                 case "sun.misc.FloatingDecimal":
                                     jt.append(" Please check the interface !\n");
                             }

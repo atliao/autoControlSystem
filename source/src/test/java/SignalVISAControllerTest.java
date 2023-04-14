@@ -1,8 +1,6 @@
 import com.la.SignalVISAController;
 import org.junit.Test;
 
-import java.io.IOException;
-
 /**
  * @author LA
  * @createDate 2023-02-19-11:40
@@ -14,7 +12,7 @@ public class SignalVISAControllerTest {
 
     @Test
     public void testReadId() throws InterruptedException {
-        signalVISAController = new SignalVISAController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("USB0::0x0D4A::0x000E::9267032::INSTR");
         String id = signalVISAController.readID();
         System.out.println("device id: " + id);
         signalVISAController.closeController();
@@ -22,7 +20,7 @@ public class SignalVISAControllerTest {
 
     @Test
     public void testQuery() throws InterruptedException {
-        signalVISAController = new SignalVISAController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("USB0::0x0D4A::0x000E::9267032::INSTR");
 
         String channelMode = signalVISAController.queryChannelMode();
         System.out.println("信道模式: " + channelMode);
@@ -57,44 +55,63 @@ public class SignalVISAControllerTest {
     }
 
     @Test
+    public void test() throws InterruptedException {
+        signalVISAController = new SignalVISAController("USB0::0x0D4A::0x000E::9267032::INSTR");
+        int channel = 1;
+        //String amplitudeMode = signalVISAController.queryAmplitudeMode(channel);
+        //signalVISAController.setSignalPhase(2,0);
+        signalVISAController.setSignalFrequency(2, 5);
+        //String res = signalVISAController.querySignalPhase(2);
+        String res = signalVISAController.querySignalFrequency(2);
+        System.out.println(res);
+        //System.out.println("振幅模式: " + amplitudeMode);
+        signalVISAController.closeController();
+    }
+
+    @Test
     public void testOutputOnAndOff() throws InterruptedException {
-        signalVISAController = new SignalVISAController("ASRL2::INSTR");
-        signalVISAController.OutputOn(1);
-        Thread.sleep(5000);
-        signalVISAController.OutputOff(1);
+        signalVISAController = new SignalVISAController("USB0::0x0D4A::0x000E::9267032::INSTR");
+        int channel = 2;
+        //signalVISAController.OutputOn(channel);
+        //Thread.sleep(5000);
+        signalVISAController.OutputOff(channel);
         signalVISAController.closeController();
     }
 
     @Test
     public void testSetting() throws Exception {
-        signalVISAController = new SignalVISAController("ASRL2::INSTR");
+        signalVISAController = new SignalVISAController("USB0::0x0D4A::0x000E::9267032::INSTR");
         //初始化
         //signalVISAController.initSignalChannel(1);
 
+        int channel = 2;
         //设置频率模式
-        signalVISAController.setSignalFrequencyMode(1);
+        //signalVISAController.setSignalFrequencyMode(1);
 
         //设置频率
-        signalVISAController.setSignalFrequency(1,1000);
+        signalVISAController.setSignalFrequency(channel,800);
 
         //设置振幅模式
-        signalVISAController.setSignalAmplitudeMode(1);
+        //signalVISAController.setSignalAmplitudeMode(1);
+
+        //设置振幅
+        signalVISAController.setSignalAmplitude(channel,0.02);
 
         //开启
-        signalVISAController.OutputOn(1);
+        signalVISAController.OutputOn(channel);
 
         Thread.sleep(5000);
 
         //设置振幅
-        signalVISAController.setSignalAmplitude(1,3.4);
+        signalVISAController.setSignalAmplitude(channel,0.05);
 
         //设置相位
-        signalVISAController.setSignalPhase(1,0);
+        signalVISAController.setSignalPhase(channel,-50);
 
         Thread.sleep(5000);
 
         //关闭
-        signalVISAController.OutputOff(1);
+        signalVISAController.OutputOff(channel);
 
         signalVISAController.closeController();
     }

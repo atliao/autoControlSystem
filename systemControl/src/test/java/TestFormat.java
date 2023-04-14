@@ -7,8 +7,8 @@ import java.text.DecimalFormat;
 public class TestFormat {
 
     public static void main(String[] args) {
-        double t = 2.3546;
-        DecimalFormat df = new DecimalFormat("0.00");
+        double t = 22.3546;
+        DecimalFormat df = new DecimalFormat("0.000");
         String res = df.format(t);
         System.out.println(res);
     }

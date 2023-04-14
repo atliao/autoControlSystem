@@ -20,7 +20,7 @@ public class SwitchControllerTest {
 
     @Test
     public void testQueryParameter(){
-        switchController = new SwitchController("ASRL2::INSTR");
+        switchController = new SwitchController("ASRL4::INSTR");
         String parameter = switchController.queryParameter();
         System.out.println(parameter);
         switchController.closeController();
@@ -35,20 +35,47 @@ public class SwitchControllerTest {
     }
 
     @Test
-    public void testCloseAndOpen() throws InterruptedException {
-        switchController = new SwitchController("ASRL2::INSTR");
+    public void testQueryFunction() throws InterruptedException {
+        switchController = new SwitchController("ASRL13::INSTR");
+        String queryFunction = switchController.queryFunction();
+        System.out.println(queryFunction);
+        switchController.closeController();
+    }
+
+    @Test
+    public void testClose() throws InterruptedException {
+        switchController = new SwitchController("ASRL3::INSTR");
         //switchController.initSwitch();
-        switchController.closeChannel(100);
-        Thread.sleep(5000);
+        switchController.closeChannel(203);
+        //Thread.sleep(5000);
 
-        switchController.openChannel(100);
-        Thread.sleep(200);
+        //switchController.openChannel(200);
+        //Thread.sleep(200);
 
-        switchController.closeChannel(101);
-        Thread.sleep(5000);
+        //switchController.closeChannel(101);
+        //Thread.sleep(5000);
 
-        switchController.openChannel(101);
-        Thread.sleep(200);
+        //switchController.openChannel(101);
+        //Thread.sleep(200);
+
+        switchController.closeController();
+    }
+
+    @Test
+    public void testOpen() throws InterruptedException {
+        switchController = new SwitchController("ASRL3::INSTR");
+        //switchController.initSwitch();
+        //switchController.closeChannel(200);
+        //Thread.sleep(5000);
+
+        switchController.openChannel(204);
+        //Thread.sleep(200);
+
+        //switchController.closeChannel(101);
+        //Thread.sleep(5000);
+
+        //switchController.openChannel(101);
+        //Thread.sleep(200);
 
         switchController.closeController();
     }

@@ -1,5 +1,4 @@
 package COMTEST;
-
 import com.la.port.PortController;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
@@ -16,6 +15,7 @@ public class COM1Test {
     private Thread threadA;
 
     public COM1Test() {
+
         PortController portController = new PortController();
         SerialPort serialport = portController.openPort("COM11");
 
@@ -55,7 +55,7 @@ public class COM1Test {
                             if(str.equals(":SOURce1:FREQuency:CW?\n") || str.equals(":SOURce2:FREQuency:CW?\n")){
                                 portController.sendmessage(serialport, "1000 Hz\n");
                             }
-                            if(str.equals(":SOURce1:VOLTager:LEVel:IMMediate:AMPLitude?\n") || str.equals(":SOURce2:VOLTager:LEVel:IMMediate:AMPLitude?\n")){
+                            if(str.equals(":SOURce1:VOLTage?\n") || str.equals(":SOURce2:VOLTager?\n")){
                                 portController.sendmessage(serialport, "2.4 VPP\n");
                             }
                             if(str.equals(":SOURce1:PHASe?\n") || str.equals(":SOURce2:PHASe?\n")){
@@ -64,7 +64,7 @@ public class COM1Test {
                             if(str.equals(":SOURce1:FREQuency:MODE?\n") || str.equals(":SOURce2:FREQuency:MODE?\n")){
                                 portController.sendmessage(serialport, "CW\n");
                             }
-                            if(str.equals(":SOURce1:VOLTage:LEVel:IMMediate:AMPLitude:MODE?\n") || str.equals(":SOURce2:VOLTage:LEVel:IMMediate:AMPLitude:MODE?\n")){
+                            if(str.equals(":SOURce1:VOLTage:MODE?\n") || str.equals(":SOURce2:VOLTage:MODE?\n")){
                                 portController.sendmessage(serialport, "FIX\n");
                             }
                         }

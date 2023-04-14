@@ -4,6 +4,7 @@ import com.la.port.PortController;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.TooManyListenersException;
 
@@ -14,7 +15,10 @@ import java.util.TooManyListenersException;
 public class COM5Test {
 
     private Thread threadA;
-    double vol = 100;
+    double res = 267*267 + 0.334*0.334;
+
+    double v = 1;
+    double p = 0;
 
     public COM5Test() {
         PortController portController = new PortController();
@@ -25,6 +29,11 @@ public class COM5Test {
                 try {
 
                     portController.setListenerToSerialPort(serialport, event -> {
+                        /*try {
+                            Thread.sleep(20);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }*/
                         if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
                             Calendar Cld = Calendar.getInstance();
                             int YY = Cld.get(Calendar.YEAR);
@@ -52,12 +61,24 @@ public class COM5Test {
                             }
                             if(str.startsWith("sourceAmp: ")){
                                 String num = str.substring(10,str.length()-1);
-                                double tmp = Double.valueOf(num);
-                                vol = (tmp - 3.34) * (tmp - 3.34);
+                                double tmp = Double.parseDouble(num);
+                                v = tmp;
+                                res = (v - 0.334) * (v - 0.334) + (p - 267)*(p - 267);
+                            }
+                            if(str.startsWith("sourcePhas: ")){
+                                String num = str.substring(11,str.length()-1);
+                                double tmp = Double.parseDouble(num);
+                                p = tmp;
+                                res = (v - 0.334) * (v - 0.334) + (p - 267)*(p - 267);
+                            }
+                            if(str.equals("OUTX 0\n")){
+                                res = 267*267 + 0.334*0.334;
+                                v = 1;
+                                p = 0;
                             }
                             if(str.equals("OUTP? 3\n")){
-                                String msg = String.valueOf(vol);
-                                portController.sendmessage(serialport, msg + "\n");
+                                portController.sendmessage(serialport, String.valueOf(res) + "\r");
+                                int i = 0;
                             }
                             if(str.equals("FOUT? 1\n")){
                                 portController.sendmessage(serialport, "1\n");
@@ -69,7 +90,7 @@ public class COM5Test {
                                 portController.sendmessage(serialport, "0.0\n");
                             }
                             if(str.equals("FREQ?\n")){
-                                portController.sendmessage(serialport, "1000\n");
+                                portController.sendmessage(serialport, "1000\r");
                             }
                             if(str.equals("RSLP?\n")){
                                 portController.sendmessage(serialport, "0\n");

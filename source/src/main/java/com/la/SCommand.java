@@ -37,19 +37,19 @@ public class SCommand {
     public static String query_signal_frequncy_mode = ":SOURce<channel>:FREQuency:MODE?";
 
     //设置连续模式的频率(45ms)
-    public static String signal_frequency = ":SOURce<channel>:FREQuency:CW <freq> HZ";
+    public static String signal_frequency = ":SOURce<channel>:FREQuency:CW <freq>HZ";
     //10ms
     public static String query_signal_frequency = ":SOURce<channel>:FREQuency:CW?";
 
     //设置振幅的模式（固定（连续）or扫描）(230ms)
-    public static String signal_amplitude_mode = ":SOURce<channel>:VOLTage:LEVel:IMMediate:AMPLitude:MODE FIXed";
+    public static String signal_amplitude_mode = ":SOURce<channel>:VOLTage:MODE FIXed";
     //15ms
-    public static String query_signal_amplitude_mode = ":SOURce<channel>:VOLTage:LEVel:IMMediate:AMPLitude:MODE?";
+    public static String query_signal_amplitude_mode = ":SOURce<channel>:VOLTage:MODE?";
 
     //设置振幅(95ms)(VPP、VPK、VRMS)
-    public static String signal_amplitude =":SOURce<channel>:VOLTager:LEVel:IMMediate:AMPLitude <amp>VPP";
+    public static String signal_amplitude =":SOURce<channel>:VOLTage <amp>VRMS";
     //10ms
-    public static String query_signal_amplitude =":SOURce<channel>:VOLTager:LEVel:IMMediate:AMPLitude?";
+    public static String query_signal_amplitude =":SOURce<channel>:VOLTage?";
 
     //设置相位(20ms) 单位 °
     public static String signal_phase = ":SOURce<channel>:PHASe <phase>DEG";

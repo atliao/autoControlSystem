@@ -32,7 +32,7 @@ public class LCommand {
     //设置内部振动器的频率，只有在内部参考源模式下可以使用(Hz)
     public static String FREQ = "FREQ <f>";
 
-    //查询和设置正弦信号输出的振幅（VL的振幅，单位 VRMS）
+    //查询和设置正弦信号输出的振幅（VL的振幅，单位 VRMS）(范围：0.004-5.000)
     public static String QSLVL = "SLVL?";
     public static String SLVL = "SLVL <x>";
 
@@ -40,7 +40,8 @@ public class LCommand {
     public static String QISRC = "ISRC?";
     public static String ISRC = "ISRC <i>";
 
-    //查询输入信号的电压（R）（Vsig的振幅）（在相位相同的情况下，也可以查询 X(1) ：VsigCosΘ）
+    //查询输入信号的电压（R）（Vsig的振幅）（在相位相同的情况下，也可以查询 X(1) ：VsigCosΘ, R(3):Vsig）
+    //单位:V
     public static String QOUTP = "OUTP? 3";
 
     //查询和设置CH1或CH2的输出：可选择X(Y)，R等

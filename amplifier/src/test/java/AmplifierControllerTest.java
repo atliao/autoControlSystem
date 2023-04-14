@@ -10,17 +10,30 @@ public class AmplifierControllerTest {
     AmplifierController amplifierController;
 
     @Test
-    public void testReadID() throws InterruptedException {
-        amplifierController = new AmplifierController("ASRL2::INSTR");
-        String id = amplifierController.readID();
-        System.out.println("device id: " + id);
+    public void test(){
+        String a = "aa\r";
+        String num = "0.0199891\r";
+        num = num.substring(0, num.length()-1);
+        System.out.println(num + "mV");
+    }
+    @Test
+    public void testReadID() throws Exception {
+        amplifierController = new AmplifierController("COM14");
+        amplifierController.initAmplifier();
+        //String res = amplifierController.readID();
+        amplifierController.setReferencePhas(100);
+        amplifierController.setReferenceFreq(30);
+        //Thread.sleep(1000);
+        //String res = amplifierController.QueryReferenceFreq();
+        String res = amplifierController.QuerySourceAmplitude();
+        System.out.println(res);
         amplifierController.closeController();
     }
 
 
     @Test
     public void testQuery() throws Exception {
-        amplifierController = new AmplifierController("ASRL2::INSTR");
+        amplifierController = new AmplifierController("COM4");
 
         String reference = amplifierController.QueryReference();
         System.out.println("参考源: " + reference);
@@ -68,9 +81,13 @@ public class AmplifierControllerTest {
 
     @Test
     public void testReadSourceAmplitude() throws Exception {
-        amplifierController = new AmplifierController("ASRL6::INSTR");
+        amplifierController = new AmplifierController("COM4");
+        amplifierController.initAmplifier();
+        amplifierController.setReferenceFreq(1000);
+        Thread.sleep(5000);
         String sourceAmplitude = amplifierController.QuerySourceAmplitude();
-        System.out.println("测量输入信号振幅: " + sourceAmplitude);
+        Double res = Double.valueOf(sourceAmplitude);
+        System.out.println("测量振幅：" + res + " mV");
         amplifierController.closeController();
     }
 }

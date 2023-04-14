@@ -29,12 +29,19 @@ public class SwitchController {
                 "限流: " + i5;
     }
 
-    public void initSwitch(){
-        //visaController.setParameter();
+    public void initSwitch() throws InterruptedException {
+        //closeChannel(204);
     }
 
     public String readID() throws InterruptedException {
         visaController.writeCmd(SWCommond.QueryID);
+        Thread.sleep(100);
+        String res = visaController.readResult();
+        return res;
+    }
+
+    public String queryFunction() throws InterruptedException {
+        visaController.writeCmd(SWCommond.QueryFuction);
         Thread.sleep(100);
         String res = visaController.readResult();
         return res;

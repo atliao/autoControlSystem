@@ -15,6 +15,11 @@ import java.util.Date;
  */
 public class GUIForAllFreq extends JFrame {
 
+    //设备地址
+    private String sourceIP = "USB0::0x0D4A::0x000E::9267032::INSTR";
+    private String switchIP = "ASRL3::INSTR";
+    private String amplifierCOM = "COM4";
+
     private int[] frequency = {500,1000,1500,2000};
     private double amplitude = 1.0;
     private double phase = 0;
@@ -140,7 +145,7 @@ public class GUIForAllFreq extends JFrame {
                 Thread A = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Auto auto = new Auto();
+                        Auto auto = new Auto(sourceIP, switchIP, amplifierCOM);
                         for(int freq : frequency){
 
                             jt.append(" " + freq + " Hz measurement: starting...\n");

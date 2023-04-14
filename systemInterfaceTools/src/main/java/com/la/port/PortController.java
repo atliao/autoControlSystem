@@ -71,7 +71,7 @@ public class PortController {
             SerialPort serialPort = (SerialPort) commPort;
             //设置串口参数（波特率，数据位8，停止位1，校验位无）
             serialPort.setSerialPortParams(parameter.getBaudRate(), parameter.getDataBits(), parameter.getStopBits(), parameter.getParity());
-            System.out.println(parameter.getPortName()+" open successfully!");
+            //System.out.println(parameter.getPortName()+" open successfully!");
             return serialPort;
         } else {
             //是其他类型的端口
@@ -99,7 +99,7 @@ public class PortController {
     public  void ClosePort(SerialPort serialPort) {
         if (serialPort != null) {
             serialPort.close();
-            System.out.println(parameter.getPortName()+" is closed");
+            //System.out.println(parameter.getPortName()+" is closed");
         }
     }
 
@@ -177,6 +177,26 @@ public class PortController {
         else {
             message = new String(bytes);
         }
+        return message;
+    }
+
+    //接收消息：字符串
+    public String readmessageR(SerialPort serialPort) {
+        String message;
+        byte[] bytes = readData(serialPort);
+        if(bytes==null) {
+            message = "";
+        }
+        else {
+            message = new String(bytes);
+        }
+        for(int i = 0; i < message.length(); i++){
+            if(message.charAt(i) == '\r'){
+                message = message.substring(0, i);
+                return message;
+            }
+        }
+        message = message + readmessageR(serialPort);
         return message;
     }
 

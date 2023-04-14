@@ -28,25 +28,25 @@ public class SignalVISAController {
         //信道独立
         String msg1 = SCommand.channel_mode;
         visaController.writeCmd(msg1);
-        Thread.sleep(360);
+        Thread.sleep(350);
 
         //信号波形及反转：正弦，正常（不反转）
         String msg2;
         msg2 = SCommand.signal_polarity.replace("<channel>", "1");
         visaController.writeCmd(msg2);
-        Thread.sleep(120);
+        Thread.sleep(110);
         msg2 = SCommand.signal_polarity.replace("<channel>", "2");
         visaController.writeCmd(msg2);
-        Thread.sleep(120);
+        Thread.sleep(110);
 
         //信号极性：FS，双极性
         String msg3;
         msg3 = SCommand.signal_scale.replace("<channel>", "1");
         visaController.writeCmd(msg3);
-        Thread.sleep(120);
+        Thread.sleep(110);
         msg3 = SCommand.signal_scale.replace("<channel>", "2");
         visaController.writeCmd(msg3);
-        Thread.sleep(120);
+        Thread.sleep(110);
 
         //信号模式：连续
         String msg4;
@@ -112,7 +112,7 @@ public class SignalVISAController {
         String chan = "" + channel;
         String msg = SCommand.signal_frequncy_mode.replace("<channel>", chan);
         visaController.writeCmd(msg);
-        Thread.sleep(200);
+        Thread.sleep(190);
     }
 
     //查询信号频率
@@ -126,13 +126,13 @@ public class SignalVISAController {
     }
 
     //设置信号频率：Hz
-    public void setSignalFrequency(int channel, int freq) throws InterruptedException {
+    public void setSignalFrequency(int channel, double freq) throws InterruptedException {
         String chan = "" + channel;
         String frequency = "" + freq;
         String msg = SCommand.signal_frequency.replace("<channel>", chan);
         msg = msg.replace("<freq>", frequency);
         visaController.writeCmd(msg);
-        Thread.sleep(60);
+        Thread.sleep(50);
     }
 
     //查询振幅模式
@@ -150,7 +150,7 @@ public class SignalVISAController {
         String chan = "" + channel;
         String msg = SCommand.signal_amplitude_mode.replace("<channel>", chan);
         visaController.writeCmd(msg);
-        Thread.sleep(250);
+        Thread.sleep(240);
     }
 
     //查询信号振幅
@@ -163,14 +163,14 @@ public class SignalVISAController {
         return res;
     }
 
-    //设置信号振幅：VPP
+    //设置信号振幅：VRMS
     public void setSignalAmplitude(int channel, double amp) throws InterruptedException {
         String chan = "" + channel;
         String amplitude = "" + amp;
         String msg = SCommand.signal_amplitude.replace("<channel>", chan);
         msg = msg.replace("<amp>", amplitude);
         visaController.writeCmd(msg);
-        Thread.sleep(110);
+        Thread.sleep(100);
     }
 
     //查询信号相位
@@ -190,7 +190,7 @@ public class SignalVISAController {
         String msg = SCommand.signal_phase.replace("<channel>", chan);
         msg = msg.replace("<phase>", pha);
         visaController.writeCmd(msg);
-        Thread.sleep(50);
+        Thread.sleep(30);
 
     }
 
@@ -199,7 +199,7 @@ public class SignalVISAController {
         String chan = "" + channel;
         String msg = SCommand.channel_on.replace("<channel>", chan);
         visaController.writeCmd(msg);
-        Thread.sleep(50);
+        Thread.sleep(30);
     }
 
     //信号输出关闭
@@ -207,7 +207,7 @@ public class SignalVISAController {
         String chan = "" + channel;
         String msg = SCommand.channel_off.replace("<channel>", chan);
         visaController.writeCmd(msg);
-        Thread.sleep(50);
+        Thread.sleep(30);
     }
 
     //关闭设备接口

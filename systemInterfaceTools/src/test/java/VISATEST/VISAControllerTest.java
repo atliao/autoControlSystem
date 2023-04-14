@@ -11,9 +11,20 @@ import org.junit.Test;
 public class VISAControllerTest {
 
     @Test
+    public void testCommunication() throws InterruptedException {
+        VISAController vController = new VISAController();
+        vController.open("ASRL4::INSTR");
+        /*vController.writeCmd("OU")*/
+        vController.writeCmd("*IDN?");
+        Thread.sleep(100);
+        String s = vController.readResult();
+        System.out.println(s);
+        vController.close();
+    }
+    @Test
     public void testOpen(){
         VISAController vController = new VISAController();
-        boolean open = vController.open("ASRL2::INSTR");
+        boolean open = vController.open("ASRL4::INSTR");
         System.out.println(open);
         boolean close = vController.close();
         System.out.println(close);
@@ -22,7 +33,7 @@ public class VISAControllerTest {
     @Test
     public void testParameter() throws InterruptedException {
         VISAController vController = new VISAController();
-        boolean open = vController.open("ASRL3::INSTR");
+        boolean open = vController.open("ASRL4::INSTR");
         System.out.println(open);
         //vController.setParameter(9600,8,0,0);
         int i1 = vController.viGetAttribute(VISA.VI_ATTR_ASRL_BAUD);
@@ -42,17 +53,18 @@ public class VISAControllerTest {
     @Test
     public void testSendAndRead(){
         VISAController vController = new VISAController();
-        boolean open = vController.open("ASRL2::INSTR");
-        System.out.println(open);
-        vController.writeCmd("*IDN?");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String s = vController.readResult();
+        vController.open("ASRL14::INSTR");
+
+        //VISAController vController2 = new VISAController();
+        //vController2.open("ASRL15::INSTR");
+
+        //System.out.println(open);
+        vController.writeCmd("FREQ?");
+        //String s = vController.readResult();
+        String s = vController.readResultR();
         System.out.println(s);
-        boolean close = vController.close();
-        System.out.println(close);
+        vController.close();
+        //vController2.close();
+        //System.out.println(close);
     }
 }

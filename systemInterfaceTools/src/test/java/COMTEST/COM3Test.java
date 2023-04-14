@@ -43,6 +43,9 @@ public class COM3Test {
                             if(str.equals("CLOSe:STATe?\n")){
                                 portController.sendmessage(serialport, "1:0,,,,,,6,,,9, 2\n");
                             }
+                            if(str.equals("FUNCtion? 1")){
+                                portController.sendmessage(serialport, "2");
+                            }
                         }
                     });
                 }catch (TooManyListenersException e) {
